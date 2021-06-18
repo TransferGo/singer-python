@@ -2,6 +2,11 @@
 
 from setuptools import setup, find_packages
 import subprocess
+import shutil
+import os
+
+if os.path.isdir('build'):
+    shutil.rmtree('build')
 
 setup(name="singer-python",
       version='5.12.1',
@@ -14,8 +19,7 @@ setup(name="singer-python",
           'jsonschema==2.6.0',
           'simplejson==3.11.1',
           'python-dateutil>=2.6.0',
-          'backoff==1.8.0',
-	  'ciso8601',
+          'backoff==1.8.0'
       ],
       extras_require={
           'dev': [
@@ -33,3 +37,8 @@ setup(name="singer-python",
               ]
           },
 )
+
+# clean-up
+if os.path.isdir('build'):
+    shutil.rmtree('build')
+shutil.rmtree('singer_python.egg-info')

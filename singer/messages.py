@@ -2,7 +2,8 @@ import sys
 
 import pytz
 import simplejson as json
-import ciso8601
+#Remove this one because it is not native Python lib so it makes deployment complicated.
+#import ciso8601
 
 import singer.utils as u
 from .logger import get_logger
@@ -187,12 +188,14 @@ def parse_message(msg):
 
     if msg_type == 'RECORD':
         time_extracted = obj.get('time_extracted')
-        if time_extracted:
-            try:
-                time_extracted = ciso8601.parse_datetime(time_extracted)
-            except:
-                LOGGER.warning("unable to parse time_extracted with ciso8601 library")
-                time_extracted = None
+        # ciso8601 is not python library. this makes complicated deployment on AWS Glue
+        # comment out this part
+        # if time_extracted:
+        #     try:
+        #         time_extracted = ciso8601.parse_datetime(time_extracted)
+        #     except:
+        #         LOGGER.warning("unable to parse time_extracted with ciso8601 library")
+        #         time_extracted = None
 
 
             # time_extracted = dateutil.parser.parse(time_extracted)
